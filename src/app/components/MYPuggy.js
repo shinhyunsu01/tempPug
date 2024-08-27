@@ -11,7 +11,9 @@ export default function MYPuggy() {
       <div className="w-full">
         <div className="font-pretendard w-full grid grid-cols-5 pb-6">
           {titleArr.map((title) => (
-            <div className="text-center">{title}</div>
+            <div className="text-center" key={title}>
+              {title}
+            </div>
           ))}
         </div>
         <hr className="w-full border-black border-3px " />

@@ -7,7 +7,7 @@ export default function LogoAll() {
   return (
     <div className="w-full  grid grid-cols-2 grid-rows-2 gap-y-4 -mt-4">
       {logos.map((imgSrc) => (
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center" key={imgSrc}>
           <div className="rounded-full bg-[#263526] w-20 h-20 flex items-center justify-center">
             <Image src={imgSrc} alt="gate-io" layout="responsive" width={0} height={0} className="px-4 py-4" />
           </div>
