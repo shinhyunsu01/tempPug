@@ -1,7 +1,7 @@
 "use client";
 
 import { useWeb3Modal, useWalletInfo } from "@web3modal/wagmi/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAccount, useDisconnect } from "wagmi";
 import { shortenAddress } from "../lib";
 
