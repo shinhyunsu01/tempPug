@@ -13,11 +13,19 @@
   src: url("/fonts/Pretendard-Bold.woff") format("woff");
   font-family: "Pretendard";
   font-weight: 700;
+  font-style: normal;
 }
 
 @font-face {
   font-family: "TerminaTest";
   src: url("/fonts/TerminaTest-Bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-Bold.otf") format("opentype");
   font-weight: bold;
   font-style: normal;
 }
@@ -35,4 +43,8 @@ body {
 }
 .font-termina-test {
   font-family: "TerminaTest";
+}
+
+.font-inter {
+  font-family: "Inter";
 }
