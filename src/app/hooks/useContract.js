@@ -53,9 +53,9 @@ const useContract = (address) => {
       }
     });
 
-  const allowance = async (spendAddress) => {
+  const allowance = async () => {
     try {
-      let token = await tokenContract.read.allowance([address, spendAddress]);
+      let token = await tokenContract.read.allowance([address, process.env.NEXT_PUBLIC_ST_TOKEN_ADDRESS]);
       if (Number(token) === 0) {
         return {
           res: false,

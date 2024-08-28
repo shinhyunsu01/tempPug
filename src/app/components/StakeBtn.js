@@ -16,7 +16,7 @@ export default function StakeBtn({ amount }) {
     setErr(null);
     if (userAddress != null && amount > 0) {
       setLoading(true);
-      const allowanceRes = await allowance(stTokenAddress);
+      const allowanceRes = await allowance();
 
       if (allowanceRes.res) {
         const approveRes = await approve(stTokenAddress, amount);
