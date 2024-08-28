@@ -10,6 +10,7 @@ export default function MYPuggy() {
   const userTotalStaked = useRecoilValue(userTotalStakedRecoil);
   const userAvailablePuggy = useRecoilValue(userAvailablePuggyRecoil);
   const userStakingAmount = useRecoilValue(userStakingAmountRecoil);
+  const totalStaked = useRecoilValue(totalStakedRecoil);
 
   const [userData, setUserData] = useState({
     totalStaked: 0,
@@ -18,10 +19,10 @@ export default function MYPuggy() {
   });
 
   useEffect(() => {
-    if (userTotalStaked != null) setUserData((prevState) => ({ ...prevState, totalStaked: String(userTotalStaked) }));
+    if (totalStaked != null) setUserData((prevState) => ({ ...prevState, totalStaked: String(totalStaked) }));
     if (userAvailablePuggy != null) setUserData((prevState) => ({ ...prevState, userAvailablePuggy: String(userAvailablePuggy) }));
     if (userStakingAmount != null) setUserData((prevState) => ({ ...prevState, userStakingAmount: String(userStakingAmount) }));
-  }, [userTotalStaked, userAvailablePuggy, userStakingAmount]);
+  }, [userAvailablePuggy, userStakingAmount, totalStaked]);
 
   return (
     <div className=" max-w-7xl w-full h-full rounded-2xl flex items-center flex-col  bg-[#F9A03ECC] bg-opacity-80 shadow-xl pb-10 px-10 my-8">
