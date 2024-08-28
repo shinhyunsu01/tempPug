@@ -80,6 +80,7 @@ const useContract = (address) => {
 
   const approve = async (spendAddress, amount) => {
     try {
+      console.log("approveInput", spendAddress, amount);
       let token = await tokenContract.write.approve([spendAddress, parseUnits(amount.toString(), COIN_DECIMALS)]);
       const transaction = await publicClient.waitForTransactionReceipt({
         token,
