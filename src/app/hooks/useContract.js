@@ -19,7 +19,7 @@ const useContract = (address) => {
 
   const getBalance = async () => {
     try {
-      let token = formatUnits(await tokenContract.read.balanceOf([address]), 18);
+      let token = parseFloat(formatUnits(await tokenContract.read.balanceOf([address]), 18)).toFixed(1);
       return {
         res: true,
         token,
@@ -34,35 +34,10 @@ const useContract = (address) => {
     }
   };
 
-  const handletransfer = async ({ toAddress, amount }) =>
-    new Promise(async (resolve, reject) => {
-      try {
-        const hash = await tokenContract.write.staking([parseUnits(amount, COIN_DECIMALS)]);
-        const transaction = await publicClient.waitForTransactionReceipt({
-          hash,
-        });
-
-        if (transaction.status === "success") {
-          resolve();
-        } else {
-          throw new Error(transaction);
-        }
-      } catch (error) {
-        console.log(error);
-        reject(error);
-      }
-    });
-
   const allowance = async (spendAddress) => {
     try {
-      let token = await tokenContract.read.allowance([address, spendAddress]);
-      console.log("allowanceCheck", token);
-      /*if (Number(token) === 0) {
-        return {
-          res: false,
-          error: "Fail",
-        };
-      }*/
+      let token = formatUnits(await tokenContract.read.allowance([address, spendAddress]), 18);
+
       return {
         res: true,
         token,
@@ -80,20 +55,21 @@ const useContract = (address) => {
 
   const approve = async (spendAddress, amount) => {
     try {
-      console.log("approveInput", spendAddress, amount);
-      let token = await tokenContract.write.approve([spendAddress, parseUnits(amount.toString(), COIN_DECIMALS)]);
+      const hash = await tokenContract.write.approve([spendAddress, parseUnits(amount.toString(), COIN_DECIMALS)]);
+
       const transaction = await publicClient.waitForTransactionReceipt({
-        token,
+        hash,
       });
 
       if (transaction.status === "success") {
         return {
           res: true,
-          token,
+          hash,
         };
+      } else {
+        throw new Error(transaction);
       }
     } catch (error) {
-      console.log("approveError", error);
       const errorMessage = error.message || error.toString();
       const firstLine = errorMessage.split("\n")[0];
       return {
@@ -115,7 +91,7 @@ const useContract = (address) => {
 
   return {
     getBalance,
-    transfer: handletransfer,
+
     allowance,
     approve,
   };

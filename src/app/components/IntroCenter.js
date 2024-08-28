@@ -1,17 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
+//import { useRecoilValue } from "recoil";
 
 import WalletButton from "../context/WalletButton";
+import { userAccountAddress } from "../state/Account";
 
 import PubLicData from "./PublicData";
 import StakeBtn from "./StakeBtn";
 
 export default function IntroCenter() {
-  const [amount, setAmount] = useState(0.0);
+  const [amount, setAmount] = useState(0);
+  //const [userAddress] = useRecoilValue(userAccountAddress);
 
   const onChange = (event) => {
-    if (/^\d*\.?\d*$/.test(event.target.value)) setAmount(event.target.value);
+    if (event.target.value > 0) setAmount(event.target.value);
+    else {
+      event.target.value = null;
+      setAmount(0);
+    }
   };
 
   return (
@@ -28,16 +35,7 @@ export default function IntroCenter() {
 
       <PubLicData />
 
-      <StakeBtn amount={amount} />
-
-      <div className="w-full grid grid-cols-2 mt-8 space-x-2 font-termina-test">
-        <button className="py-2  rounded-full" style={{ background: "rgba(173, 164, 154, 1)" }}>
-          UNSTAKE
-        </button>
-        <button className="py-2 rounded-full " style={{ backgroundColor: "rgba(235, 252, 114, 1)" }}>
-          Reward Claim
-        </button>
-      </div>
+      <StakeBtn amount={amount} setAmount={setAmount} />
     </div>
   );
 }

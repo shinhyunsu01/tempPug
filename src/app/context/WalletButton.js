@@ -6,11 +6,11 @@ import { useRecoilState } from "recoil";
 import { useAccount, useDisconnect } from "wagmi";
 import useStContract from "../hooks/useStContrac";
 import { shortenAddress } from "../lib";
-import { userAccountAddress } from "../state/Account";
+import { totalStakedRecoil, userAccountAddress } from "../state/Account";
 
 export default function WalletButton() {
   const [userAddress, setUserAddress] = useRecoilState(userAccountAddress);
-  //const [userTotalStaked, setUserTotalStaked] = useRecoilState(totalStakedRecoil);
+  const [userTotalStaked, setUserTotalStaked] = useRecoilState(totalStakedRecoil);
 
   const { getUserStakingAmount } = useStContract();
   const { open } = useWeb3Modal();
@@ -23,8 +23,7 @@ export default function WalletButton() {
   };
   const readUserData = async () => {
     const { token } = await getUserStakingAmount(address);
-
-    //setUserTotalStaked(token);
+    setUserTotalStaked(token);
   };
 
   useEffect(() => {
