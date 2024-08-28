@@ -20,6 +20,7 @@ export default function StakeBtn({ amount }) {
       const allowanceRes = await allowance(stTokenAddress);
 
       if (allowanceRes.res) {
+        console.log("aaaaamount", amount);
         const approveRes = await approve(stTokenAddress, amount);
 
         if (approveRes.res) {

@@ -68,6 +68,7 @@ const useContract = (address) => {
         token,
       };
     } catch (error) {
+      console.log("allowanceError", error);
       const errorMessage = error.message || error.toString();
       const firstLine = errorMessage.split("\n")[0];
       return {
@@ -90,12 +91,8 @@ const useContract = (address) => {
           token,
         };
       }
-
-      return {
-        res: true,
-        token,
-      };
     } catch (error) {
+      console.log("approveError", error);
       const errorMessage = error.message || error.toString();
       const firstLine = errorMessage.split("\n")[0];
       return {
