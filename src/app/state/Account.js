@@ -20,6 +20,16 @@ export const userStakingAmountRecoil = atom({
   default: null,
 });
 
+export const userReceivedRecoil = atom({
+  key: "UserStakingReceivedRecoil",
+  default: null,
+});
+
+export const userClaimRecoil = atom({
+  key: "UserStakingClaimRecoil",
+  default: null,
+});
+
 export const totalStakedRecoil = atom({
   key: "TotalStaked",
   default: null,

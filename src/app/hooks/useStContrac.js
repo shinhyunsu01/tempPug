@@ -20,6 +20,8 @@ const useStContract = () => {
 
   const staking = async (amount) => {
     try {
+      console.log("stakingamount", amount);
+
       let token = await tokenContract.write.staking([parseUnits(amount.toString(), COIN_DECIMALS)]);
 
       const transaction = await publicClient.waitForTransactionReceipt({
@@ -45,10 +47,16 @@ const useStContract = () => {
   const unstaking = async (amount) => {
     try {
       let token = await tokenContract.write.unStaking([parseUnits(amount.toString(), COIN_DECIMALS)]);
-      return {
-        res: true,
+      const transaction = await publicClient.waitForTransactionReceipt({
         token,
-      };
+      });
+
+      if (transaction.status === "success") {
+        return {
+          res: true,
+          token,
+        };
+      }
     } catch (error) {
       const errorMessage = error.message || error.toString();
       const firstLine = errorMessage.split("\n")[0];
