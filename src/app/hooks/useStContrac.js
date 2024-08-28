@@ -79,7 +79,7 @@ const useStContract = () => {
 
   const getUserStakingAmount = async (address) => {
     try {
-      let token = await tokenContract.read.getUserStakingAmount([address]);
+      let token = formatUnits(await tokenContract.read.getUserStakingAmount([address]), 18);
       console.log("getUserStakingAmount", token);
       return {
         res: true,
