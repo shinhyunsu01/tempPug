@@ -30,7 +30,7 @@ export default function StakeBtn() {
         setErr(allowanceRes.error);
       }
     } else if (amount == 0) {
-      setErr("Amount 0 ");
+      setErr("Amount is not defined");
     }
     setLoading(false);
   };

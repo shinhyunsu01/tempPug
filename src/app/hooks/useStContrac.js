@@ -53,7 +53,7 @@ const useStContract = () => {
 
   const getTotalStaking = async () => {
     try {
-      let token = await tokenContract.read.getTotalStaking();
+      let token = formatUnits(await tokenContract.read.getTotalStaking(), 18);
 
       return {
         res: true,
