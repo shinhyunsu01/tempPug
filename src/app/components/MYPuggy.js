@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { userAvailablePuggyRecoil, userStakingAmountRecoil, userTotalStakedRecoil } from "../state/Account";
+import { totalStakedRecoil, userAvailablePuggyRecoil, userStakingAmountRecoil, userTotalStakedRecoil } from "../state/Account";
 import Ttile from "./Ttile";
 
 export default function MYPuggy() {
