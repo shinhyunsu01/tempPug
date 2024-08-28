@@ -21,10 +21,17 @@ const useStContract = () => {
   const staking = async (amount) => {
     try {
       let token = await tokenContract.write.staking([parseUnits(amount.toString(), COIN_DECIMALS)]);
-      return {
-        res: true,
+
+      const transaction = await publicClient.waitForTransactionReceipt({
         token,
-      };
+      });
+
+      if (transaction.status === "success") {
+        return {
+          res: true,
+          token,
+        };
+      }
     } catch (error) {
       const errorMessage = error.message || error.toString();
       const firstLine = errorMessage.split("\n")[0];
@@ -55,7 +62,7 @@ const useStContract = () => {
   const getTotalStaking = async () => {
     try {
       let token = formatUnits(await tokenContract.read.getTotalStaking(), 18);
-
+      console.log("getTotalStaking", token);
       return {
         res: true,
         token,
@@ -73,7 +80,7 @@ const useStContract = () => {
   const getUserStakingAmount = async (address) => {
     try {
       let token = await tokenContract.read.getUserStakingAmount([address]);
-
+      console.log("getUserStakingAmount", token);
       return {
         res: true,
         token,
@@ -91,8 +98,6 @@ const useStContract = () => {
   const readData = async () => {
     const resGetUserStakingAmount = await getUserStakingAmount(userAddress);
     setUserTotalStaked(resGetUserStakingAmount.token);
-  };
-  const publicData = async () => {
     const resGetTotalStaking = await getTotalStaking();
     setTotalState(resGetTotalStaking.token);
   };
@@ -101,7 +106,6 @@ const useStContract = () => {
     if (userAddress != null) {
       readData();
     }
-    publicData();
   }, [userAddress]);
 
   return {
