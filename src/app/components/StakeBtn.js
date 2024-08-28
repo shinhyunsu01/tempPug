@@ -22,7 +22,7 @@ export default function StakeBtn({ amount }) {
       if (allowanceRes.res) {
         const approveRes = await approve(stTokenAddress, amount);
 
-        if (approveRes) {
+        if (approveRes.res) {
           const stakingRes = await staking(amount);
         } else {
           setErr(approveRes.error);
