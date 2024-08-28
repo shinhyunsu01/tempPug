@@ -4,11 +4,6 @@ import Connector from "./provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Puggy Staking",
-  description: "Puggy Staking",
-};
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">

@@ -1,12 +1,18 @@
 "use client";
 
-import { useWeb3Modal, useWalletInfo } from "@web3modal/wagmi/react";
+import { useWeb3Modal } from "@web3modal/wagmi/react";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import { useAccount, useDisconnect } from "wagmi";
+import useStContract from "../hooks/useStContrac";
 import { shortenAddress } from "../lib";
+import { userAccountAddress, totalStaked } from "../state/Account";
 
 export default function WalletButton() {
-  const [loading, setLoading] = useState(false);
+  const [userAddress, setUserAddress] = useRecoilState(userAccountAddress);
+  const [userTotalStaked, setUserTotalStaked] = useRecoilState(totalStaked);
+
+  const { getUserStakingAmount } = useStContract();
   const { open } = useWeb3Modal();
   const { address, isConnected } = useAccount();
 
@@ -15,26 +21,17 @@ export default function WalletButton() {
   const connect = async () => {
     await open();
   };
+  const readUserData = async () => {
+    const { token } = await getUserStakingAmount(address);
 
-  const [balance, setBalance] = useState(null);
+    setUserTotalStaked(token);
+  };
 
   useEffect(() => {
-    async function fetchBalance() {
-      const contractAddress = address; // 스마트 컨트랙트 주소
-      const walletAddress = process.env.NEXT_PUBLIC_TOKEN_ADDRESS; // 조회하려는 지갑 주소
-
-      // 불러온 ABI와 컨트랙트 주소를 사용하여 컨트랙트 인스턴스 생성
-      const contract = client.createContract({
-        address: contractAddress,
-        abi: myContractABI,
-      });
-
-      // 'balanceOf' 함수 호출 예제 (필요에 따라 함수 이름 변경)
-      const balance = await contract.balanceOf(walletAddress);
-      setBalance(balance);
+    if (address != undefined) {
+      setUserAddress(address);
+      readUserData();
     }
-
-    fetchBalance();
   }, [address]);
 
   return (

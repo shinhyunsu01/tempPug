@@ -1,6 +1,19 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import WalletButton from "../context/WalletButton";
 
+import PubLicData from "./PublicData";
+import StakeBtn from "./StakeBtn";
+
 export default function IntroCenter() {
+  const [amount, setAmount] = useState(0.0);
+
+  const onChange = (event) => {
+    if (/^\d*\.?\d*$/.test(event.target.value)) setAmount(event.target.value);
+  };
+
   return (
     <div
       className="w-full md:w-2/4 shadow-[7px_7px_25px_rgba(0,0,0,0.25)] rounded-2xl px-6 py-10 flex flex-col items-center justify-center"
@@ -11,28 +24,11 @@ export default function IntroCenter() {
       </div>
 
       <div className="text-left w-full py-4 mt-2 text-white font-termina-test text-xs md:text-sm">Enter Tokens Amount</div>
-      <div className=" w-full grid grid-cols-3 grid-rows-2 font-termina-test text-xs text-white">
-        <div className="flex  justify-center">
-          <div>TVL</div>
-        </div>
-        <div className="flex flex-col  justify-center items-center">
-          <div>Total Reward</div>
-          <div className="font-pretendard  font-medium">(Fixed)</div>
-        </div>
-        <div className="flex flex-col  justify-center items-center">
-          <div>Reward Per</div>
-          <div className="font-pretendard font-medium ">$PUGGY</div>
-        </div>
-        <div className="flex  justify-center">0</div>
-        <div className="flex  justify-center">0</div>
-        <div className="flex  justify-center">0</div>
-      </div>
+      <input onChange={onChange} type="number" className="my-4 font-termina-test w-full rounded-lg focus:outline-none pl-2 py-2 text-lg" placeholder={amount} />
 
-      <button className=" relative w-full h-14  rounded-full" style={{ backgroundColor: "rgba(249, 160, 62, 1)" }}>
-        <div className="absolute inset-1 border-2 border-black rounded-full flex items-center justify-center">
-          <div className="">STAKE</div>
-        </div>
-      </button>
+      <PubLicData />
+
+      <StakeBtn />
 
       <div className="w-full grid grid-cols-2 mt-8 space-x-2 font-termina-test">
         <button className="py-2  rounded-full" style={{ background: "rgba(173, 164, 154, 1)" }}>
