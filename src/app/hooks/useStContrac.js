@@ -91,6 +91,8 @@ const useStContract = () => {
   const readData = async () => {
     const resGetUserStakingAmount = await getUserStakingAmount(userAddress);
     setUserTotalStaked(resGetUserStakingAmount.token);
+  };
+  const publicData = async () => {
     const resGetTotalStaking = await getTotalStaking();
     setTotalState(resGetTotalStaking.token);
   };
@@ -99,6 +101,7 @@ const useStContract = () => {
     if (userAddress != null) {
       readData();
     }
+    publicData();
   }, [userAddress]);
 
   return {
