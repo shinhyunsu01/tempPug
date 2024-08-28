@@ -96,7 +96,6 @@ const useContract = (address) => {
 
   const readData = async () => {
     const resUserAvailablePuggy = await getBalance();
-    console.log("resUserAvailablePuggy", resUserAvailablePuggy);
     setUserAvailablePuggy(resUserAvailablePuggy.token);
   };
   useEffect(() => {
