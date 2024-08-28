@@ -4,12 +4,14 @@ import token from "@/app/abi/PuggyCoin.json";
 import { useState, useEffect } from "react";
 import { useSignedContract, publicClient } from "@/app/hooks/useConnector";
 import { parseUnits, formatUnits } from "viem";
+import { userAvailablePuggyRecoil } from "../state/Account";
+import { useRecoilState } from "recoil";
 
 const COIN_DECIMALS = 18;
 const COIN_ADDRESS = process.env.NEXT_PUBLIC_TOKEN_ADDRESS;
 
 const useContract = (address) => {
-  //const [userTotalStaked, setUserTotalStaked] = useRecoilState(totalStaked);
+  const [userAvailablePuggy, setUserAvailablePuggy] = useRecoilState(userAvailablePuggyRecoil);
 
   const tokenAddress = COIN_ADDRESS;
   const tokenABI = token.abi;
@@ -91,8 +93,13 @@ const useContract = (address) => {
     }
   };
 
+  const readData = async () => {
+    const resUserAvailablePuggy = await getBalance();
+    setUserAvailablePuggy(resUserAvailablePuggy.token);
+  };
   useEffect(() => {
     if (address) {
+      readData();
     }
   }, [address]);
 

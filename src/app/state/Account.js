@@ -10,6 +10,11 @@ export const userTotalStakedRecoil = atom({
   default: null,
 });
 
+export const userAvailablePuggyRecoil = atom({
+  key: "UserAvailablePuggyRecoil",
+  default: null,
+});
+
 export const totalStakedRecoil = atom({
   key: "TotalStaked",
   default: null,

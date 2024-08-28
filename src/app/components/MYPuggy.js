@@ -2,19 +2,22 @@
 
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { userTotalStakedRecoil } from "../state/Account";
+import { userAvailablePuggyRecoil, userTotalStakedRecoil } from "../state/Account";
 import Ttile from "./Ttile";
 
 export default function MYPuggy() {
   const titleArr = ["Total Staked", "Available $PUGGY", "Staking Amount", "Reward Received", "Reward Claimable"];
   const userTotalStaked = useRecoilValue(userTotalStakedRecoil);
+  const userAvailablePuggy = useRecoilValue(userAvailablePuggyRecoil);
 
   const [userData, setUserData] = useState({
     totalStaked: 0,
+    userAvailablePuggy: 0,
   });
 
   useEffect(() => {
     if (userTotalStaked != null) setUserData({ totalStaked: String(userTotalStaked) });
+    if (userAvailablePuggy != null) setUserData({ totalStaked: String(userAvailablePuggy) });
   }, [userTotalStaked]);
 
   return (
@@ -31,7 +34,7 @@ export default function MYPuggy() {
         <hr className="w-full border-black border-3px " />
         <div className="font-pretendard w-full grid grid-cols-5  py-4 text-xs">
           <div className="text-center">{userData.totalStaked === null ? 0 : userData.totalStaked}</div>
-          <div className="text-center">0</div>
+          <div className="text-center">{userData.userAvailablePuggy === null ? 0 : userData.userAvailablePuggy}</div>
           <div className="text-center">0</div>
           <div className="text-center">0</div>
           <div className="text-center">0</div>

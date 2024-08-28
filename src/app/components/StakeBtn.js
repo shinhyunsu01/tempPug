@@ -13,7 +13,6 @@ export default function StakeBtn({ amount }) {
   const { allowance, approve } = useContract(userAddress);
   const { staking } = useStContract();
   const stakeOnClick = async () => {
-    console.log("amount", amount);
     setErr(null);
     if (userAddress != null && amount > 0) {
       setLoading(true);
