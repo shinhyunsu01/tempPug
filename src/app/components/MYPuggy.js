@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { totalStaked } from "../state/Account";
+import { totalStakedRecoil } from "../state/Account";
 import Ttile from "./Ttile";
 
 export default function MYPuggy() {
   const titleArr = ["Total Staked", "Available $PUGGY", "Staking Amount", "Reward Received", "Reward Claimable"];
-  const userTotalStaked = useRecoilValue(totalStaked);
+  const userTotalStaked = useRecoilValue(totalStakedRecoil);
 
   const [userData, setUserData] = useState({
     totalStaked: 0,

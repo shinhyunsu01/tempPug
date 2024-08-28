@@ -6,13 +6,14 @@ import useContract from "../hooks/useContract";
 import useStContract from "../hooks/useStContrac";
 import { userAccountAddress } from "../state/Account";
 import Loading from "./Loading";
-export default function StakeBtn() {
+export default function StakeBtn({ amount }) {
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
   const userAddress = useRecoilValue(userAccountAddress);
   const { allowance, approve } = useContract(userAddress);
   const { staking } = useStContract();
   const stakeOnClick = async () => {
+    console.log("amount", amount);
     setErr(null);
     if (userAddress != null && amount > 0) {
       setLoading(true);
@@ -30,7 +31,7 @@ export default function StakeBtn() {
         setErr(allowanceRes.error);
       }
     } else if (amount == 0) {
-      setErr("Amount is not defined");
+      setErr("Amount 0");
     }
     setLoading(false);
   };

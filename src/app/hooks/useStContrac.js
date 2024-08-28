@@ -2,17 +2,18 @@
 
 import token from "@/app/abi/StakingCoin.json";
 import { useState, useEffect } from "react";
-import { useSignedContract, publicClient } from "@/app/hooks/useConnector";
+import { useSignedContract } from "@/app/hooks/useConnector";
 import { parseUnits, formatUnits } from "viem";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { totalStaked, userAccountAddress } from "../state/Account";
+import { totalStakedRecoil, userAccountAddress, userTotalStakedRecoil } from "../state/Account";
 
 const COIN_DECIMALS = 18;
 const COIN_ADDRESS = process.env.NEXT_PUBLIC_ST_TOKEN_ADDRESS;
 
 const useStContract = () => {
   const userAddress = useRecoilValue(userAccountAddress);
-  const [userTotalStaked, setUserTotalStaked] = useRecoilState(totalStaked);
+  const [userTotalStaked, setUserTotalStaked] = useRecoilState(userTotalStakedRecoil);
+  const [totalState, setTotalState] = useRecoilState(totalStakedRecoil);
   const tokenAddress = COIN_ADDRESS;
   const tokenABI = token.abi;
   const tokenContract = useSignedContract(tokenAddress, tokenABI);
@@ -88,12 +89,15 @@ const useStContract = () => {
   };
 
   const readData = async () => {
-    setUserTotalStaked(await getUserStakingAmount(userAddress));
+    const resGetUserStakingAmount = await getUserStakingAmount(userAddress);
+    setUserTotalStaked(resGetUserStakingAmount.token);
+    const resGetTotalStaking = await getTotalStaking();
+    setTotalState(resGetTotalStaking.token);
   };
 
   useEffect(() => {
     if (userAddress != null) {
-      readData;
+      readData();
     }
   }, [userAddress]);
 

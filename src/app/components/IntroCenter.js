@@ -28,7 +28,7 @@ export default function IntroCenter() {
 
       <PubLicData />
 
-      <StakeBtn />
+      <StakeBtn amount={amount} />
 
       <div className="w-full grid grid-cols-2 mt-8 space-x-2 font-termina-test">
         <button className="py-2  rounded-full" style={{ background: "rgba(173, 164, 154, 1)" }}>

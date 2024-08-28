@@ -5,7 +5,12 @@ export const userAccountAddress = atom({
   default: null,
 });
 
-export const totalStaked = atom({
+export const userTotalStakedRecoil = atom({
+  key: "UserTotalStaked",
+  default: null,
+});
+
+export const totalStakedRecoil = atom({
   key: "TotalStaked",
   default: null,
 });

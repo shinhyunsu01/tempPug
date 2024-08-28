@@ -1,21 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import useStContract from "../hooks/useStContrac";
+import { useRecoilValue } from "recoil";
+import { totalStakedRecoil } from "../state/Account";
 
 export default function PubLicData() {
   const [tvlVal, setTvlVal] = useState("0");
-  const { getTotalStaking } = useStContract();
-
+  const tvl = useRecoilValue(totalStakedRecoil);
   const read = async () => {
-    const { res, token } = await getTotalStaking();
-
-    setTvlVal(String(token).slice(0, -1));
+    setTvlVal(tvl);
   };
 
   useEffect(() => {
     read();
-  }, []);
+  }, [tvl]);
 
   return (
     <div className=" w-full grid grid-cols-3 grid-rows-2 font-termina-test text-xs text-white">
