@@ -7,6 +7,7 @@ import useStContract from "../hooks/useStContrac";
 import { userAccountAddress } from "../state/Account";
 import Loading from "./Loading";
 export default function StakeBtn({ amount }) {
+  const stTokenAddress = process.env.NEXT_PUBLIC_ST_TOKEN_ADDRESS;
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState(null);
   const userAddress = useRecoilValue(userAccountAddress);
@@ -16,7 +17,7 @@ export default function StakeBtn({ amount }) {
     setErr(null);
     if (userAddress != null && amount > 0) {
       setLoading(true);
-      const allowanceRes = await allowance();
+      const allowanceRes = await allowance(stTokenAddress);
 
       if (allowanceRes.res) {
         const approveRes = await approve(stTokenAddress, amount);

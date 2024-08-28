@@ -16,9 +16,10 @@ export default function MYPuggy() {
   });
 
   useEffect(() => {
-    if (userTotalStaked != null) setUserData({ totalStaked: String(userTotalStaked) });
-    if (userAvailablePuggy != null) setUserData({ totalStaked: String(userAvailablePuggy) });
-  }, [userTotalStaked]);
+    console.log("comuserAvailablePuggy", userAvailablePuggy);
+    if (userTotalStaked != null) setUserData((prevState) => ({ ...prevState, totalStaked: String(userTotalStaked) }));
+    if (userAvailablePuggy != null) setUserData((prevState) => ({ ...prevState, userAvailablePuggy: String(userAvailablePuggy) }));
+  }, [userTotalStaked, userAvailablePuggy]);
 
   return (
     <div className=" max-w-7xl w-full h-full rounded-2xl flex items-center flex-col  bg-[#F9A03ECC] bg-opacity-80 shadow-xl pb-10 px-10 my-8">

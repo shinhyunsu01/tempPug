@@ -19,7 +19,7 @@ const useContract = (address) => {
 
   const getBalance = async () => {
     try {
-      let token = await tokenContract.read.balanceOf([address]);
+      let token = formatUnits(await tokenContract.read.balanceOf([address]), 18);
       return {
         res: true,
         token,
@@ -53,15 +53,16 @@ const useContract = (address) => {
       }
     });
 
-  const allowance = async () => {
+  const allowance = async (spendAddress) => {
     try {
-      let token = await tokenContract.read.allowance([address, process.env.NEXT_PUBLIC_ST_TOKEN_ADDRESS]);
-      if (Number(token) === 0) {
+      let token = await tokenContract.read.allowance([address, spendAddress]);
+      console.log("allowanceCheck", token);
+      /*if (Number(token) === 0) {
         return {
           res: false,
           error: "Fail",
         };
-      }
+      }*/
       return {
         res: true,
         token,
@@ -95,6 +96,7 @@ const useContract = (address) => {
 
   const readData = async () => {
     const resUserAvailablePuggy = await getBalance();
+    console.log("resUserAvailablePuggy", resUserAvailablePuggy);
     setUserAvailablePuggy(resUserAvailablePuggy.token);
   };
   useEffect(() => {
