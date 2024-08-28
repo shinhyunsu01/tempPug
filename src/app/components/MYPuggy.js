@@ -14,7 +14,7 @@ export default function MYPuggy() {
   });
 
   useEffect(() => {
-    setUserData({ totalStaked: String(userTotalStaked) });
+    if (userTotalStaked != null) setUserData({ totalStaked: String(userTotalStaked) });
   }, [userTotalStaked]);
 
   return (
