@@ -20,24 +20,27 @@ export default function StakeBtn({ amount, setAmount }) {
   const { staking, unstaking, claim } = useStContract();
   const stakeOnClick = async () => {
     setErr(null);
-    const allowanceRes = await allowance(stTokenAddress);
-
-    if (allowanceRes.res) {
-      setLoading((prevState) => ({ ...prevState, stake: true }));
-      if (!(Number(allowanceRes.token) > 0 && Number(allowanceRes.token) >= amount)) {
-        const approveRes = await approve(stTokenAddress, amount);
-        if (!approveRes.res) setErr(approveRes.error);
-      }
-      const stakingRes = await staking(amount);
-      if (stakingRes.res) {
-        setAmount(0);
-      } else {
-        setErr(approveRes.error);
-      }
+    if (amount === 0) {
+      setErr("Amnount 0");
     } else {
-      setErr(allowanceRes.error);
+      const allowanceRes = await allowance(stTokenAddress);
+      if (allowanceRes.res) {
+        setLoading((prevState) => ({ ...prevState, stake: true }));
+        if (!(Number(allowanceRes.token) > 0 && Number(allowanceRes.token) >= amount)) {
+          const approveRes = await approve(stTokenAddress, amount);
+          if (!approveRes.res) setErr(approveRes.error);
+        }
+        const stakingRes = await staking(amount);
+        if (stakingRes.res) {
+          setAmount(0);
+        } else {
+          setErr(approveRes.error);
+        }
+      } else {
+        setErr(allowanceRes.error);
+      }
+      setLoading((prevState) => ({ ...prevState, stake: false }));
     }
-    setLoading((prevState) => ({ ...prevState, stake: false }));
   };
 
   const unstakeOnClick = async () => {
