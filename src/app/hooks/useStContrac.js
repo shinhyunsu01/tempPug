@@ -23,7 +23,7 @@ const useStContract = () => {
   const tokenABI = token.abi;
   const tokenContract = useSignedContract(tokenAddress, tokenABI);
 
-  const staking = (amount) => {
+  const staking = async (amount) => {
     return new Promise(async (resolve, reject) => {
       try {
         const hash = await tokenContract.write.staking([parseUnits(amount.toString(), COIN_DECIMALS)]);
@@ -38,13 +38,11 @@ const useStContract = () => {
               res: true,
               hash,
             });
-        } else {
-          throw new Error(transaction);
         }
       } catch (error) {
         const errorMessage = error.message || error.toString();
         const firstLine = errorMessage.split("\n")[0];
-        reject({
+        resolve({
           res: false,
           error: firstLine,
         });
@@ -68,13 +66,11 @@ const useStContract = () => {
               res: true,
               hash,
             });
-        } else {
-          throw new Error(transaction);
         }
       } catch (error) {
         const errorMessage = error.message || error.toString();
         const firstLine = errorMessage.split("\n")[0];
-        reject({
+        resolve({
           res: false,
           error: firstLine,
         });
@@ -97,13 +93,11 @@ const useStContract = () => {
               res: true,
               hash,
             });
-        } else {
-          throw new Error(transaction);
         }
       } catch (error) {
         const errorMessage = error.message || error.toString();
         const firstLine = errorMessage.split("\n")[0];
-        reject({
+        resolve({
           res: false,
           error: firstLine,
         });

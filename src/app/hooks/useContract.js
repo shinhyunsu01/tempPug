@@ -65,13 +65,11 @@ const useContract = (address) => {
             res: true,
             hash,
           });
-        } else {
-          throw new Error(transaction);
         }
       } catch (error) {
         const errorMessage = error.message || error.toString();
         const firstLine = errorMessage.split("\n")[0];
-        reject({
+        resolve({
           res: false,
           error: firstLine,
         });
