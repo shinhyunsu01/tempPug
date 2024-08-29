@@ -43,7 +43,6 @@ const useContract = (address) => {
         token,
       };
     } catch (error) {
-      console.log("allowanceError", error);
       const errorMessage = error.message || error.toString();
       const firstLine = errorMessage.split("\n")[0];
       return {
@@ -54,6 +53,31 @@ const useContract = (address) => {
   };
 
   const approve = async (spendAddress, amount) => {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const hash = await tokenContract.write.approve([spendAddress, parseUnits(amount.toString(), COIN_DECIMALS)]);
+        const transaction = await publicClient.waitForTransactionReceipt({
+          hash,
+        });
+
+        if (transaction.status === "success") {
+          resolve({
+            res: true,
+            hash,
+          });
+        } else {
+          throw new Error(transaction);
+        }
+      } catch (error) {
+        const errorMessage = error.message || error.toString();
+        const firstLine = errorMessage.split("\n")[0];
+        reject({
+          res: false,
+          error: firstLine,
+        });
+      }
+    });
+    /*
     try {
       const hash = await tokenContract.write.approve([spendAddress, parseUnits(amount.toString(), COIN_DECIMALS)]);
 
@@ -76,7 +100,7 @@ const useContract = (address) => {
         res: false,
         error: firstLine,
       };
-    }
+    }*/
   };
 
   const readData = async () => {

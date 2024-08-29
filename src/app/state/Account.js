@@ -25,6 +25,11 @@ export const userReceivedRecoil = atom({
   default: null,
 });
 
+export const userRewardRecoil = atom({
+  key: "UserStakingRewardRecoil",
+  default: null,
+});
+
 export const userClaimRecoil = atom({
   key: "UserStakingClaimRecoil",
   default: null,

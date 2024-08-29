@@ -11,35 +11,25 @@ export default function StakeBtn({ amount, setAmount }) {
   const [loading, setLoading] = useState({
     stake: false,
     unStake: false,
+    claim: false,
   });
   const userTotalStaked = useRecoilValue(userTotalStakedRecoil);
   const [err, setErr] = useState(null);
   const userAddress = useRecoilValue(userAccountAddress);
   const { allowance, approve } = useContract(userAddress);
-  const { staking } = useStContract();
+  const { staking, unstaking, claim } = useStContract();
   const stakeOnClick = async () => {
     const allowanceRes = await allowance(stTokenAddress);
-    console.log("allowanceRes", allowanceRes);
+
     if (allowanceRes.res) {
       setLoading((prevState) => ({ ...prevState, stake: true }));
       const approveRes = await approve(stTokenAddress, amount);
-    } else {
-      setErr(allowanceRes.error);
-    }
-    setLoading((prevState) => ({ ...prevState, stake: false }));
-  };
-
-  const unstakeOnClick = async (amount) => {
-    const allowanceRes = await allowance(stTokenAddress);
-    const userTotalStakedNumber = parseInt(userTotalStaked, 10);
-
-    if (allowanceRes.res) {
-      setLoading((prevState) => ({ ...prevState, unStake: true }));
-
-      const approveRes = await approve(userAddress, amount);
 
       if (approveRes.res) {
         const stakingRes = await staking(amount);
+        if (stakingRes.res) {
+          setAmount(0);
+        }
       } else {
         setErr(approveRes.error);
       }
@@ -49,7 +39,25 @@ export default function StakeBtn({ amount, setAmount }) {
     setLoading((prevState) => ({ ...prevState, stake: false }));
   };
 
-  const claimOnClick = async () => {};
+  const unstakeOnClick = async () => {
+    setLoading((prevState) => ({ ...prevState, unStake: true }));
+
+    const stakingRes = await unstaking(amount);
+    if (stakingRes.res) {
+      setAmount(0);
+    }
+    setLoading((prevState) => ({ ...prevState, unStake: false }));
+  };
+
+  const claimOnClick = async () => {
+    setLoading((prevState) => ({ ...prevState, claim: true }));
+
+    const stakingRes = await claim(amount);
+    if (stakingRes.res) {
+      setAmount(0);
+    }
+    setLoading((prevState) => ({ ...prevState, claim: false }));
+  };
 
   return (
     <>
@@ -69,18 +77,18 @@ export default function StakeBtn({ amount, setAmount }) {
         <button
           disabled={userAddress == null}
           onClick={unstakeOnClick}
-          className="hover:opacity-80 py-2  rounded-full"
+          className="hover:opacity-80 py-2  rounded-full relative w-full h-full flex items-center justify-center"
           style={{ background: "rgba(173, 164, 154, 1)" }}
         >
-          UNSTAKE
+          <div className="relative  rounded-full flex items-center justify-center">{loading.unStake ? <Loading /> : <div>Unstake</div>}</div>
         </button>
         <button
           disabled={userAddress == null}
           onClick={claimOnClick}
-          className="hover:opacity-80 py-2 rounded-full "
+          className="hover:opacity-80 py-2 rounded-full relative"
           style={{ backgroundColor: "rgba(235, 252, 114, 1)" }}
         >
-          Reward Claim
+          <div className="  rounded-full flex items-center justify-center">{loading.claim ? <Loading /> : <div>Reward Claim</div>}</div>
         </button>
       </div>
     </>
