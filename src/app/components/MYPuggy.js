@@ -9,6 +9,7 @@ export default function MYPuggy() {
   const titleArr = ["Total Staked", "Available $PUGGY", "Staking Amount", "Reward Received", "Reward Claimable"];
   const userTotalStaked = useRecoilValue(userTotalStakedRecoil);
   const userAvailablePuggy = useRecoilValue(userAvailablePuggyRecoil);
+
   const totalStaked = useRecoilValue(totalStakedRecoil);
 
   const userReward = useRecoilValue(userRewardRecoil);
