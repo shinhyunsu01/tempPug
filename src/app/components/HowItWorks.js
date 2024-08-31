@@ -1,9 +1,13 @@
+import Image from "next/image";
 import Ttile from "./Ttile";
 
 export default function HowItWorks() {
   return (
-    <div className="max-w-7xl   md:text-2xl  rounded-2xl flex items-center flex-col  bg-[#F9A03ECC] bg-opacity-80 shadow-xl py-4 ">
+    <div className="relative max-w-7xl   md:text-2xl  rounded-2xl flex items-center flex-col  bg-[#F9A03ECC] bg-opacity-80 shadow-xl py-4 ">
+      <Image src="/assets/Puggy_4.png" className="block md:hidden absolute -top-20  left-0 z-0 w-40 " alt="cloud_square" width={200} height={100} />
+
       <Ttile str="HOW IT WORKS" />
+
       <div className="mt-8 w-full h-full grid grid-rows-2 grid-cols-2 md:grid-rows-1 md:grid-cols-4 gap-4 px-4 md:px-20  md:pb-10 text-sm">
         <div className="bg-black rounded-3xl  h-56 flex items-center flex-col px-4 ">
           <div className="bg-black rounded-3xl h-8 w-1/2 -mt-3 flex  justify-center  text-white ">

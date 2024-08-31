@@ -13,7 +13,7 @@ export default function FAQBtn({ str, substr }) {
       {/* 첫 번째 박스 */}
       <div className="w-full bg-[#DEED1F] p-2 rounded-full flex items-center justify-between z-10 relative my-6">
         <div className=" w-full font-inter text-xs md:text-sm">{str}</div>
-        <button onClick={toggleVisibility} className=" bg-black text-white h-8 w-10  rounded-full flex items-center justify-center">
+        <button onClick={toggleVisibility} className=" bg-black text-white h-8 w-8 p-2  rounded-full flex items-center justify-center">
           {isVisible ? "-" : "+"}
         </button>
       </div>
