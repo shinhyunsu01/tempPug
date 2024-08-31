@@ -3,10 +3,7 @@ import LogoAll from "./LogoAll";
 
 export default function IntroRight() {
   return (
-    <div
-      className="hidden md:flex  flex-col w-1/4 shadow-[7px_7px_25px_rgba(0,0,0,0.25)] rounded-2xl px-4"
-      style={{ backgroundColor: "rgba(54, 63, 41, 0.8)" }}
-    >
+    <div className="hidden md:flex bg-[#212E21] flex-col w-1/4 shadow-[7px_7px_25px_rgba(0,0,0,0.25)] rounded-2xl px-4">
       {/* 세번째 블럭 */}
       <div className="relative w-full ">
         <Image src="/assets/cloud_square.png" alt="cloud_square" layout="responsive" width={0} height={0} />

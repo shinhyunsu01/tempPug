@@ -8,17 +8,22 @@ export default function PubLicData() {
   const [tvlVal, setTvlVal] = useState("0");
   const [rewardPer, setRewardPer] = useState("0");
   const tvl = useRecoilValue(totalStakedRecoil);
+  //const [usd, setUsd] = useState(null);
 
   const read = async () => {
     const res = await fetch("https://info.puggy.world/usd");
     const result = await res.json();
-    setTvlVal(tvl * result);
-    setRewardPer(parseFloat(4000000 / tvl).toFixed(1));
+    //setUsd(result);
+    if (result && tvl != null) {
+      setTvlVal((tvl * result).toFixed(2));
+      setRewardPer(parseFloat(4000000 / tvl).toFixed(1));
+    }
   };
 
   useEffect(() => {
     read();
   }, [tvl]);
+  //if (usd == null) return <div className=" w-full grid grid-cols-3 grid-rows-2 font-termina-test text-xs text-white"></div>;
 
   return (
     <div className=" w-full grid grid-cols-3 grid-rows-2 font-termina-test text-xs text-white">

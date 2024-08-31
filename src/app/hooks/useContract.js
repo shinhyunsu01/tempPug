@@ -60,7 +60,7 @@ const useContract = (address) => {
           hash,
         });
 
-        if (transaction.status === "success") {
+        if (transaction && transaction.status === "success") {
           resolve({
             res: true,
             hash,
@@ -75,30 +75,6 @@ const useContract = (address) => {
         });
       }
     });
-    /*
-    try {
-      const hash = await tokenContract.write.approve([spendAddress, parseUnits(amount.toString(), COIN_DECIMALS)]);
-
-      const transaction = await publicClient.waitForTransactionReceipt({
-        hash,
-      });
-
-      if (transaction.status === "success") {
-        return {
-          res: true,
-          hash,
-        };
-      } else {
-        throw new Error(transaction);
-      }
-    } catch (error) {
-      const errorMessage = error.message || error.toString();
-      const firstLine = errorMessage.split("\n")[0];
-      return {
-        res: false,
-        error: firstLine,
-      };
-    }*/
   };
 
   const readData = async () => {

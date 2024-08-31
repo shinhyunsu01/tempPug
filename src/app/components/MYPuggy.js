@@ -33,9 +33,9 @@ export default function MYPuggy() {
   }, [userAvailablePuggy, userTotalStaked, totalStaked, userReward, userClaim]);
 
   return (
-    <div className=" max-w-7xl w-full h-full rounded-2xl flex items-center flex-col  bg-[#F9A03ECC] bg-opacity-80 shadow-xl pb-10 px-10 my-8">
+    <div className=" max-w-7xl w-full h-full rounded-2xl flex items-center flex-col  bg-[#F9A03ECC] bg-opacity-80 shadow-xl pb-10 px-10 my-8 ">
       <Ttile str="MY PUGGY" />
-      <div className="w-full">
+      <div className="w-full mt-8">
         <div className="font-pretendard w-full grid grid-cols-5 pb-6 text-xs md:text-sm">
           {titleArr.map((title) => (
             <div className="text-center" key={title}>
@@ -51,7 +51,7 @@ export default function MYPuggy() {
           <div className="text-center">{userData.userReward === null ? 0 : userData.userReward}</div>
           <div className="text-center">{userData.userClaim === null ? 0 : userData.userClaim}</div>
         </div>
-        <hr className="w-full border-black border-3px " />
+        <hr className="w-full border-black border-3px mb-8" />
       </div>
     </div>
   );

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
 import useContract from "../hooks/useContract";
 import useStContract from "../hooks/useStContrac";
-import { userAccountAddress, userTotalStakedRecoil } from "../state/Account";
+import { userAccountAddress } from "../state/Account";
 import Loading from "./Loading";
 export default function StakeBtn({ amount, setAmount }) {
   const stTokenAddress = process.env.NEXT_PUBLIC_ST_TOKEN_ADDRESS;
@@ -13,11 +13,12 @@ export default function StakeBtn({ amount, setAmount }) {
     unStake: false,
     claim: false,
   });
-  const userTotalStaked = useRecoilValue(userTotalStakedRecoil);
+
   const [err, setErr] = useState(null);
   const userAddress = useRecoilValue(userAccountAddress);
   const { allowance, approve } = useContract(userAddress);
   const { staking, unstaking, claim } = useStContract();
+  const [stateUserAddress, setStateUserAddress] = useState(null);
   const stakeOnClick = async () => {
     setErr(null);
     if (amount === 0) {
@@ -28,31 +29,50 @@ export default function StakeBtn({ amount, setAmount }) {
         setLoading((prevState) => ({ ...prevState, stake: true }));
         if (!(Number(allowanceRes.token) > 0 && Number(allowanceRes.token) >= amount)) {
           const approveRes = await approve(stTokenAddress, amount);
-          if (!approveRes.res) setErr(approveRes.error);
-        }
-        const stakingRes = await staking(amount);
-        if (stakingRes.res) {
-          setAmount(0);
+
+          if (!approveRes.res) {
+            setLoading((prevState) => ({ ...prevState, stake: false }));
+            setErr(approveRes.error);
+          } else {
+            const stakingRes = await staking(amount);
+            if (stakingRes.res) {
+              setLoading((prevState) => ({ ...prevState, stake: false }));
+              setAmount("");
+            } else {
+              setLoading((prevState) => ({ ...prevState, stake: false }));
+              setErr(stakingRes.error);
+            }
+          }
         } else {
-          setErr(approveRes.error);
+          const stakingRes = await staking(amount);
+          if (stakingRes.res) {
+            setAmount("");
+          } else {
+            setLoading((prevState) => ({ ...prevState, stake: false }));
+            setErr(stakingRes.error);
+          }
         }
       } else {
+        setLoading((prevState) => ({ ...prevState, stake: false }));
         setErr(allowanceRes.error);
       }
-      setLoading((prevState) => ({ ...prevState, stake: false }));
     }
   };
 
   const unstakeOnClick = async () => {
     setErr(null);
-    setLoading((prevState) => ({ ...prevState, unStake: true }));
 
-    const stakingRes = await unstaking(amount);
-
-    if (stakingRes.res) {
-      setAmount(0);
+    if (amount === 0) {
+      setErr("Amnount 0");
     } else {
-      setErr(stakingRes.error);
+      setLoading((prevState) => ({ ...prevState, unStake: true }));
+      const stakingRes = await unstaking(amount);
+
+      if (stakingRes.res) {
+        setAmount(0);
+      } else {
+        setErr(stakingRes.error);
+      }
     }
     setLoading((prevState) => ({ ...prevState, unStake: false }));
   };
@@ -65,17 +85,23 @@ export default function StakeBtn({ amount, setAmount }) {
     if (stakingRes.res) {
       setAmount(0);
     } else {
+      setLoading((prevState) => ({ ...prevState, claim: false }));
       setErr(stakingRes.error);
     }
-    setLoading((prevState) => ({ ...prevState, claim: false }));
   };
+
+  useEffect(() => {
+    setStateUserAddress(userAddress);
+  }, [userAddress]);
 
   return (
     <>
       <button
-        disabled={userAddress == null}
+        disabled={stateUserAddress == null || amount == 0}
         onClick={stakeOnClick}
-        className=" relative w-full h-14  rounded-full hover:opacity-80"
+        className={
+          stateUserAddress == null || amount == 0 ? "relative w-full h-14  rounded-full  mt-4" : "relative w-full h-14  rounded-full hover:opacity-80 mt-4"
+        }
         style={{ backgroundColor: "rgba(249, 160, 62, 1)" }}
       >
         <div className="absolute inset-1 border-2 border-black rounded-full flex items-center justify-center">
@@ -86,17 +112,25 @@ export default function StakeBtn({ amount, setAmount }) {
 
       <div className="w-full grid grid-cols-2 mt-8 space-x-2 font-termina-test">
         <button
-          disabled={userAddress == null}
+          disabled={stateUserAddress == null || amount == 0}
           onClick={unstakeOnClick}
-          className="hover:opacity-80 py-2  rounded-full relative w-full h-full flex items-center justify-center"
+          className={
+            stateUserAddress == null || amount == 0
+              ? " py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+              : "hover:opacity-80 py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+          }
           style={{ background: "rgba(173, 164, 154, 1)" }}
         >
           <div className="relative  rounded-full flex items-center justify-center">{loading.unStake ? <Loading /> : <div>Unstake</div>}</div>
         </button>
         <button
-          disabled={userAddress == null}
+          disabled={stateUserAddress == null}
           onClick={claimOnClick}
-          className="hover:opacity-80 py-2 rounded-full relative"
+          className={
+            stateUserAddress == null
+              ? "py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+              : "hover:opacity-80 py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+          }
           style={{ backgroundColor: "rgba(235, 252, 114, 1)" }}
         >
           <div className="  rounded-full flex items-center justify-center">{loading.claim ? <Loading /> : <div>Reward Claim</div>}</div>
