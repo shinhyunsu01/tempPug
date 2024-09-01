@@ -13,7 +13,12 @@ const COIN_ADDRESS = process.env.NEXT_PUBLIC_ST_TOKEN_ADDRESS;
 const writeFn = async ({ functionCall, inputVal }) => {
   return new Promise(async (resolve, reject) => {
     try {
-      const hash = await functionCall([parseUnits(inputVal.toString(), COIN_DECIMALS)]);
+      let hash;
+      if (inputVal != undefined) {
+        hash = await functionCall([parseUnits(inputVal.toString(), COIN_DECIMALS)]);
+      } else {
+        hash = await functionCall();
+      }
       const transaction = await publicClient.waitForTransactionReceipt({
         hash,
       });
@@ -77,18 +82,19 @@ const useStContract = () => {
 
   const unstaking = async (amount) => {
     const state = await writeFn({ functionCall: tokenContract.write.unStaking, inputVal: amount });
+
     if (state.res) {
       await userReadData();
-      return state;
     }
+    return state;
   };
 
   const claim = async (amount) => {
-    const state = await writeFn({ functionCall: tokenContract.write.rewardClaim, inputVal: amount });
+    const state = await writeFn({ functionCall: tokenContract.write.rewardClaim });
     if (state.res) {
       await userReadData();
-      return state;
     }
+    return state;
   };
 
   const getTotalStaking = async () => {

@@ -15,7 +15,7 @@ export default function PubLicData() {
     const result = await res.json();
     //setUsd(result);
     if (result && tvl != null) {
-      setTvlVal((tvl * result).toFixed(2));
+      setTvlVal((tvl * result).toFixed());
       setRewardPer(parseFloat(4000000 / tvl).toFixed(1));
     }
   };
@@ -30,11 +30,11 @@ export default function PubLicData() {
       <div className="flex  justify-center">
         <div>TVL</div>
       </div>
-      <div className="flex flex-col  justify-center items-center">
+      <div className="flex flex-col   items-center">
         <div>Total Reward</div>
         <div className="font-pretendard  font-medium">(Fixed for 2 Weeks)</div>
       </div>
-      <div className="flex flex-col  justify-center items-center">
+      <div className="flex flex-col   items-center">
         <div>Reward Per</div>
         <div className="font-pretendard font-medium ">$PUGGY</div>
       </div>
