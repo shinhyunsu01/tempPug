@@ -84,6 +84,11 @@ const useContract = (address) => {
 
     setUserAvailablePuggy(resUserAvailablePuggy.token);
   };
+
+  const initUserDataFn = () => {
+    setUserAvailablePuggy(0);
+  };
+
   useEffect(() => {
     if (address) {
       readData();
@@ -95,6 +100,8 @@ const useContract = (address) => {
 
     allowance,
     approve,
+    initUserDataFn,
+    readData,
   };
 };
 

@@ -141,6 +141,13 @@ const useStContract = () => {
       return true;
     }
   };
+  const initUserDataFn = () => {
+    setUserTotalStaked(0);
+    //setTotalState(0);
+    setUserReward(0);
+    setUserClaim(0);
+  };
+
   useEffect(() => {
     if (userAddress != null) {
       setStateUserAddress(userAddress);
@@ -158,6 +165,7 @@ const useStContract = () => {
     getUserClaim,
     claim,
     userReadData,
+    initUserDataFn,
   };
 };
 

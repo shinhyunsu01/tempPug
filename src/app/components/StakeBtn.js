@@ -17,8 +17,9 @@ export default function StakeBtn({ amount, setAmount }) {
 
   const [err, setErr] = useState(null);
   const userAddress = useRecoilValue(userAccountAddress);
-  const { allowance, approve } = useContract(userAddress);
-  const { staking, unstaking, claim } = useStContract();
+  const { allowance, approve, readData } = useContract(userAddress);
+  const { staking, unstaking, claim, userReadData } = useStContract();
+
   const [stateUserAddress, setStateUserAddress] = useState(null);
 
   const { address, isConnected } = useAccount();
@@ -103,6 +104,9 @@ export default function StakeBtn({ amount, setAmount }) {
   useEffect(() => {
     if (!isConnected) {
       setErr("");
+    } else {
+      userReadData();
+      readData();
     }
   }, [isConnected]);
 

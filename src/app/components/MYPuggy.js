@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { useAccount } from "wagmi";
+import useContract from "../hooks/useContract";
+import useStContract from "../hooks/useStContrac";
 import { totalStakedRecoil, userAvailablePuggyRecoil, userTotalStakedRecoil, userRewardRecoil, userClaimRecoil } from "../state/Account";
 import Ttile from "./Ttile";
 
@@ -9,11 +12,13 @@ export default function MYPuggy() {
   const titleArr = ["Total Staked", "Available $PUGGY", "Staking Amount", "Reward Received", "Reward Claimable"];
   const userTotalStaked = useRecoilValue(userTotalStakedRecoil);
   const userAvailablePuggy = useRecoilValue(userAvailablePuggyRecoil);
-
   const totalStaked = useRecoilValue(totalStakedRecoil);
-
   const userReward = useRecoilValue(userRewardRecoil);
   const userClaim = useRecoilValue(userClaimRecoil);
+
+  const { initUserDataFn } = useStContract();
+  const { initUserDataFn: tokeninitUserDataFn } = useContract();
+  const { isConnected } = useAccount();
 
   const [userData, setUserData] = useState({
     totalStaked: 0,
@@ -31,6 +36,13 @@ export default function MYPuggy() {
     if (userReward != null) setUserData((prevState) => ({ ...prevState, userReward: String(userReward) }));
     if (userClaim != null) setUserData((prevState) => ({ ...prevState, userClaim: String(userClaim) }));
   }, [userAvailablePuggy, userTotalStaked, totalStaked, userReward, userClaim]);
+
+  useEffect(() => {
+    if (!isConnected) {
+      initUserDataFn();
+      tokeninitUserDataFn();
+    }
+  }, [isConnected]);
 
   return (
     <div className=" max-w-7xl w-full h-full rounded-2xl flex items-center flex-col  bg-[#F9A03ECC] bg-opacity-80 shadow-xl pb-10 px-10 my-8 ">
