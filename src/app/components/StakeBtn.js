@@ -104,6 +104,7 @@ export default function StakeBtn({ amount, setAmount }) {
   useEffect(() => {
     if (!isConnected) {
       setErr("");
+      setAmount("");
     } else {
       userReadData();
       readData();
