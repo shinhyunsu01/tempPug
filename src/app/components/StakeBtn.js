@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { useAccount } from "wagmi";
 import useContract from "../hooks/useContract";
 import useStContract from "../hooks/useStContrac";
 import { userAccountAddress } from "../state/Account";
@@ -19,6 +20,8 @@ export default function StakeBtn({ amount, setAmount }) {
   const { allowance, approve } = useContract(userAddress);
   const { staking, unstaking, claim } = useStContract();
   const [stateUserAddress, setStateUserAddress] = useState(null);
+
+  const { address, isConnected } = useAccount();
   const stakeOnClick = async () => {
     setErr(null);
     if (amount === 0) {
@@ -96,6 +99,12 @@ export default function StakeBtn({ amount, setAmount }) {
   useEffect(() => {
     setStateUserAddress(userAddress);
   }, [userAddress]);
+
+  useEffect(() => {
+    if (!isConnected) {
+      setErr("");
+    }
+  }, [isConnected]);
 
   return (
     <>
