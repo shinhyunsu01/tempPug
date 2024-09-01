@@ -43,9 +43,9 @@ const writeFn = async ({ functionCall, inputVal }) => {
 const readFn = async ({ functionCall, inputVal }) => {
   try {
     let token;
-    if (inputVal != undefined) token = parseFloat(String(Math.floor(formatUnits(await functionCall([inputVal]), 18), 1)));
+    if (inputVal != undefined) token = parseFloat(String(Math.floor(formatUnits(await functionCall([inputVal]), 18)))).toFixed(1);
     else {
-      token = parseFloat(String(Math.floor(formatUnits(await functionCall(), 18), 1)));
+      token = parseFloat(String(Math.floor(formatUnits(await functionCall(), 18)))).toFixed(1);
     }
     return {
       res: true,
