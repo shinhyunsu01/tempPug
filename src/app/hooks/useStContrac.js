@@ -45,7 +45,8 @@ const readFn = async ({ functionCall, inputVal }) => {
     let token;
     if (inputVal != undefined) token = parseFloat(String(formatUnits(await functionCall([inputVal]), 18))).toFixed(1);
     else {
-      token = parseFloat(String(formatUnits(await functionCall(), 18))).toFixed(1);
+      //token = parseFloat(String(formatUnits(await functionCall(), 18))).toFixed(1);
+      token = Math.floor(parseFloat(String(formatUnits(await functionCall(), 18))) * 10) / 10;
     }
     return {
       res: true,
@@ -121,7 +122,7 @@ const useStContract = () => {
 
   const userReadData = async () => {
     const resGetUserStakingAmount = await getUserStakingAmount(userAddress);
-    setUserTotalStaked(Math.floorresGetUserStakingAmount.token);
+    setUserTotalStaked(resGetUserStakingAmount.token);
 
     const userReward = await getUserReward(userAddress);
     setUserReward(userReward.token);
