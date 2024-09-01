@@ -121,7 +121,7 @@ const useStContract = () => {
 
   const userReadData = async () => {
     const resGetUserStakingAmount = await getUserStakingAmount(userAddress);
-    setUserTotalStaked(resGetUserStakingAmount.token);
+    setUserTotalStaked(Math.floor(resGetUserStakingAmount.token));
 
     const userReward = await getUserReward(userAddress);
     setUserReward(userReward.token);

@@ -45,6 +45,7 @@ const useContract = (address) => {
     } catch (error) {
       const errorMessage = error.message || error.toString();
       const firstLine = errorMessage.split("\n")[0];
+
       return {
         res: false,
         error: firstLine,
@@ -69,6 +70,7 @@ const useContract = (address) => {
       } catch (error) {
         const errorMessage = error.message || error.toString();
         const firstLine = errorMessage.split("\n")[0];
+
         resolve({
           res: false,
           error: firstLine,

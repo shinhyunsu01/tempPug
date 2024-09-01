@@ -46,6 +46,7 @@ export default function StakeBtn({ amount, setAmount }) {
         } else {
           const stakingRes = await staking(amount);
           if (stakingRes.res) {
+            setLoading((prevState) => ({ ...prevState, stake: false }));
             setAmount("");
           } else {
             setLoading((prevState) => ({ ...prevState, stake: false }));
@@ -67,7 +68,7 @@ export default function StakeBtn({ amount, setAmount }) {
     } else {
       setLoading((prevState) => ({ ...prevState, unStake: true }));
       const stakingRes = await unstaking(amount);
-      console.log("stakingRes", stakingRes);
+
       if (stakingRes.res) {
         setAmount(0);
       } else {
