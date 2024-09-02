@@ -39,22 +39,22 @@ const writeFn = async ({ functionCall, inputVal }) => {
     }
   });
 };
-
+export function truncateToFixed1(value) {
+  const dotIndex = value.indexOf(".");
+  if (dotIndex !== -1) {
+    return value.substring(0, dotIndex + 2);
+  }
+  return value;
+}
 const readFn = async ({ functionCall, inputVal }) => {
   try {
     let token;
     let res;
-    if (inputVal != undefined) {
-      res = formatUnits(await functionCall([inputVal]), 18);
-      /*const precisionAdjustment = 1e-10;
-      token = Math.floor((res - precisionAdjustment) * 10) / 10;*/
-    } else {
-      res = formatUnits(await functionCall(), 18);
-      /*const 
-      const precisionAdjustment = 1e-10;
-      token = Math.floor((res - precisionAdjustment) * 10) / 10;*/
-    }
-    token = Number((res * 10).toFixed(1)) / 10;
+    if (inputVal != undefined) res = formatUnits(await functionCall([inputVal]), 18);
+    else res = formatUnits(await functionCall(), 18);
+
+    token = Number(truncateToFixed1(String(res)));
+
     return {
       res: true,
       token,
