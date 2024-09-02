@@ -5,9 +5,8 @@ export default function IntroLeft() {
     <div className="hidden md:flex bg-[#212E21] md:flex-col w-1/4 shadow-[7px_7px_25px_rgba(0,0,0,0.25)] rounded-2xl px-4 pb-4 ">
       <div className="relative w-full ">
         <Image className="" src="/assets/cloud_square.png" alt="cloud_square" layout="responsive" width={0} height={0} />
-        <div className="absolute top-0 left-0 w-full h-full items-center flex justify-center flex-col font-tusker text-xl">
-          <div>WHAT IS</div>
-          <div>PUGGY STAKING?</div>
+        <div className="absolute top-0 left-0 w-full h-full items-center flex justify-center flex-col font-tusker text-lg">
+          <div>WHAT IS PUGGY STAKING?</div>
         </div>
       </div>
 

@@ -32,11 +32,11 @@ export default function PubLicData() {
       </div>
       <div className="flex flex-col   items-center">
         <div>Total Reward</div>
-        <div className="font-pretendard  font-medium">(Fixed for 2 Weeks)</div>
+        <div className="font-pretendard  text-xs ">(Fixed for 2 Weeks)</div>
       </div>
-      <div className="flex flex-col   items-center">
+      <div className="flex flex-col font-medium  items-center">
         <div>Reward Per</div>
-        <div className="font-pretendard font-medium ">$PUGGY</div>
+        <div className="font-pretendard  ">$PUGGY</div>
       </div>
       <div className="flex  justify-center">$ {tvlVal}</div>
       <div className="flex  justify-center">4M $PUGGY</div>

@@ -15,7 +15,7 @@ export default function WalletButton() {
   const { open } = useWeb3Modal();
   const { address, isConnected } = useAccount();
 
-  const label = isConnected ? shortenAddress(address) : "ConnectWallet";
+  const label = isConnected ? shortenAddress(address) : "Connect Wallet";
 
   const connect = async () => {
     await open();

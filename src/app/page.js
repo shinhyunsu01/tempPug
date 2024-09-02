@@ -29,13 +29,9 @@ export default function Home() {
               <IntroRight />
             </div>
           </div>
-          <Image
-            src="/assets/Puggy_1.png"
-            alt="Puggy_2"
-            width={300}
-            height={100}
-            className="absolute -bottom-20 md:-bottom-40  right-0 md:right-20 z-10 w-40 md:w-80"
-          />
+          <div className="w-full relative max-w-7xl bg-red-500">
+            <Image src="/assets/Puggy_1.png" alt="Puggy_2" width={300} height={100} className="absolute -bottom-20 md:-bottom-40  right-0 md:right-10 z-10 " />
+          </div>
         </div>
         <div className="relative w-full px-4 flex flex-col items-center  bg-[#814C12]  py-8">
           <MYPuggy />

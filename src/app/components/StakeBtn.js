@@ -117,11 +117,13 @@ export default function StakeBtn({ amount, setAmount }) {
         disabled={stateUserAddress == null || amount == 0}
         onClick={stakeOnClick}
         className={
-          stateUserAddress == null || amount == 0 ? "relative w-full h-14  rounded-full  mt-4" : "relative w-full h-14  rounded-full hover:opacity-80 mt-4"
+          stateUserAddress == null || amount == 0
+            ? "font-termina-test relative w-full h-14  rounded-full  mt-4"
+            : "font-termina-test relative w-full h-14  rounded-full hover:opacity-80 mt-4"
         }
         style={{ backgroundColor: "rgba(249, 160, 62, 1)" }}
       >
-        <div className="absolute inset-1 border-2 border-black rounded-full flex items-center justify-center">
+        <div className="absolute text-lg inset-1 border-2 border-black rounded-full flex items-center justify-center">
           {loading.stake ? <Loading /> : <div>Stake</div>}
         </div>
       </button>
@@ -133,8 +135,8 @@ export default function StakeBtn({ amount, setAmount }) {
           onClick={unstakeOnClick}
           className={
             stateUserAddress == null || amount == 0
-              ? " py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
-              : "hover:opacity-80 py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+              ? "font-termina-test  py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+              : "hover:opacity-80 font-termina-test py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
           }
           style={{ background: "rgba(173, 164, 154, 1)" }}
         >
@@ -145,8 +147,8 @@ export default function StakeBtn({ amount, setAmount }) {
           onClick={claimOnClick}
           className={
             stateUserAddress == null
-              ? "py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
-              : "hover:opacity-80 py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+              ? "font-termina-test py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
+              : "hover:opacity-80 font-termina-test py-2 my-2 rounded-full relative w-full h-full flex items-center justify-center"
           }
           style={{ backgroundColor: "rgba(235, 252, 114, 1)" }}
         >
