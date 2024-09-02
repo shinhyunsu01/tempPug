@@ -4,7 +4,7 @@ import { createPublicClient, fallback, http, getContract } from "viem";
 import { useWalletClient } from "wagmi";
 import { polygon, polygonAmoy } from "viem/chains";
 
-const chain = polygonAmoy;
+const chain = process.env.NEXT_PUBLIC_AMOY_CHAIN === "true" ? polygonAmoy : polygon;
 
 export const useSignedContract = (address, abi) => {
   const { data: walletClient } = useWalletClient();
