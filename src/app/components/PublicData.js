@@ -26,7 +26,7 @@ export default function PubLicData() {
   //if (usd == null) return <div className=" w-full grid grid-cols-3 grid-rows-2 font-termina-test text-xs text-white"></div>;
 
   return (
-    <div className=" w-full grid grid-cols-3 grid-rows-2 font-termina-test text-xs text-white">
+    <div className=" w-full grid grid-cols-3 grid-rows-2 font-termina-test text-xs text-white gap-y-2">
       <div className="flex  justify-center">
         <div>TVL</div>
       </div>
@@ -38,9 +38,15 @@ export default function PubLicData() {
         <div>Reward Per</div>
         <div className="font-pretendard  ">$PUGGY</div>
       </div>
-      <div className="flex  justify-center">$ {tvlVal}</div>
-      <div className="flex  justify-center">4M $PUGGY</div>
-      <div className="flex  justify-center">{rewardPer}</div>
+      <div className="flex  justify-center" style={{ color: "rgba(235, 252, 114, 1)" }}>
+        $ {tvlVal}
+      </div>
+      <div className="flex  justify-center" style={{ color: "rgba(235, 252, 114, 1)" }}>
+        4M $PUGGY
+      </div>
+      <div className="flex  justify-center" style={{ color: "rgba(235, 252, 114, 1)" }}>
+        {rewardPer}
+      </div>
     </div>
   );
 }
